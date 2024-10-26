@@ -1,5 +1,7 @@
 package ru.clevertec.db;
 
+import org.flywaydb.core.Flyway;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
@@ -26,6 +28,11 @@ public class DatabaseConnection {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        Flyway flyway = Flyway.configure()
+                .dataSource(url, username, password)
+                .load();
+        flyway.migrate();
     }
 
     public static Connection getConnection() throws SQLException {
